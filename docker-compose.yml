@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: laravel-phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+    networks:
+      - laravel-net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel-app
+    container_name: laravel-app
+    volumes:
+      - .:/var/www
+    networks:
+      - laravel-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: laravel-nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - laravel-net
+
+  db:
+    image: mysql:8.0
+    container_name: laravel-db
+    environment:
+      MYSQL_DATABASE: laravel_db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "33061:3306"
+    volumes:
+      - db-data:/var/lib/mysql  # <--- Salvarea permanentă a bazei de date
+    networks:
+      - laravel-net
+
+networks:
+  laravel-net:
+    driver: bridge
+
+# <--- Declararea volumului pe hard disk
+volumes:
+  db-data:
