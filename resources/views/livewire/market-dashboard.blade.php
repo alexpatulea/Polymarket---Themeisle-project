@@ -25,8 +25,8 @@
             <div class="flex items-center space-x-3 w-full sm:w-auto">
                 <span class="text-sm font-medium text-slate-400 uppercase tracking-wider">{{ __('Sort:') }}</span>
                 <select wire:model.live="sortField" class="bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:w-auto py-2 px-3 transition-colors">
-                    <option value="created_at">✨ {{ __('Newest First') }}</option>
-                    <option value="total_pool">💰 {{ __('Highest Volume') }}</option>
+                    <option value="created_at"> {{ __('Newest First') }}</option>
+                    <option value="total_pool"> {{ __('Highest Volume') }}</option>
                 </select>
             </div>
         </div>
